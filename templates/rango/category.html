@@ -1,36 +1,30 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
 
-<html>
+{% block title_block %}
+	{% if category %}
+		{{ category.name }}
+	{% else %}
+		Unknown Category
+	{% endif %}
+{% endblock %}
 
-	<head>
-		<title>Rango</title>
-	</head>
+{% block body_block %}
+	{% if category %}
+	<h1>{{ category.name }}</h1>
+		{% if pages %}
+	<ul>
+		{% for page in pages %}
+		<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<strong>No pages currently in category.</strong>
+	{% endif %}
 
-	<body>
+	<a href="{% url 'rango:add_page' category.slug %}">Add Page</a><br>
+	{% else %}
+	The specified category does not exist.
+	{% endif %}
 
-		<div>
-		{% if category %}
-			<h1>{{ category.name }}</h1>
-			{% if pages %}
-			<ul>
-				{% for page in pages %}
-					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
-				{% endfor %}
-			</ul>
-			<br><a href="/rango/category/{{ category.slug }}/add_page/">Add Page</a><br>
-			{% else %}
-			<strong>No pages currently in category.</strong>
-			{% endif %}
-		{% else %}
-			The specified category does not exist.
-		{% endif %}
-		</div>
-
-		<div>
-			<a href="/rango/">Index</a><br />
-		</div>
-
-
-	</body>
-
-</html>
+{% endblock %}
