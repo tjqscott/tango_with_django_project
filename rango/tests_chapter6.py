@@ -183,6 +183,8 @@ class Chapter6NoItemsIndexViewTests(TestCase):
         updated_response = self.client.get(reverse('rango:index')).content.decode()
 
         category_regex = r'<li>(\s*|\n*)<a(\s+)href(\s*)=(\s*)("/rango/category/test-category/"|\'/rango/category/test-category/\')(\s*)>(\s*|\n*)Test Category(\s*|\n*)</a>(\s*|\n*)</li>'
+        print(f"look here {category_regex}")
+        print(f"look here {updated_response}")
         self.assertTrue(re.search(category_regex, updated_response), f"{FAILURE_HEADER}When adding a test category, we couldn't find the markup for it in the output of the index() view. Check you have included all the code correctly for displaying categories.{FAILURE_FOOTER}")
         self.assertIn('<strong>There are no pages present.</strong>', self.content, f"{FAILURE_HEADER}When no categories are present, we can't find the required '<strong>There are no pages present.</strong>' markup in your index() view's output. Read the Chapter 6 exercises carefully.{FAILURE_FOOTER}")
 
